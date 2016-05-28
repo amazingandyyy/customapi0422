@@ -15,7 +15,6 @@ module.exports = function(params, res){
 
 
 
-
   // console.log('wCount: ', wCount);
   // console.log(wCount);
   // console.log(typof word);

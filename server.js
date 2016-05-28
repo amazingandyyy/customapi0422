@@ -1,40 +1,48 @@
 'use strict';
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 8000;
 
 var http = require('http');
 var fs = require('fs');
 
 var server = http.createServer((req, res) => {
-  console.log('req: ',req);
+    console.log('req: ', req);
 
-  var params = req.url.split('/');
-  console.log('params: ',params);
-  params.shift(); // throw away the empty first object
-  var resource = params.shift().toLowerCase();
+    var params = req.url.split('/');
+    console.log('params: ', params);
+    params.shift(); // throw away the empty first object
+    var resource = params.shift().toLowerCase();
 
-  console.log('resource: ',resource);
+    console.log('resource: ', resource);
 
 
     switch (resource) {
-        case 'gravatar': require('./gravatar')(params, res); break;
-        case 'sentence': require('./sentence')(params, res); break;
-        case 'math': require('./math')(params, res); break;
-        case 'age': require('./age')(params, res); break;
+        case 'gravatar':
+            require('./gravatar')(params, res);
+            break;
+        case 'sentence':
+            require('./sentence')(params, res);
+            break;
+        case 'math':
+            require('./math')(params, res);
+            break;
+        case 'age':
+            require('./age')(params, res);
+            break;
         case '':
             var data = fs.readFileSync('./public/index.html');
             res.end(data.toString());
             break;
         default:
-            fs.readFile(`./public/${resource}`, (err,data) => {
-              if(err){
-                res.statusCode = 404;
-                console.error(err);
-                res.write(`Not Found the document of ${resource}!`);
-                res.end('\n');
-              }else{ // file found.
-                res.end(data.toString());
-              }
+            fs.readFile(`./public/${resource}`, (err, data) => {
+                if (err) {
+                    res.statusCode = 404;
+                    console.error(err);
+                    res.write(`Not Found the document of ${resource}!`);
+                    res.end('\n');
+                } else { // file found.
+                    res.end(data.toString());
+                }
             });
     }
 });
