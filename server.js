@@ -5,9 +5,9 @@ const PORT = process.env.PORT || 8000;
 var http = require('http');
 var fs = require('fs');
 
-var server = http.createServer((req, res) => {
-    console.log('req: ', req);
-
+http.createServer((req, res) => {
+    // console.log('req: ', req);
+    console.log('req.url: ', req.url);
     var params = req.url.split('/');
     console.log('params: ', params);
     params.shift(); // throw away the empty first object
@@ -38,18 +38,17 @@ var server = http.createServer((req, res) => {
                 if (err) {
                     res.statusCode = 404;
                     console.error(err);
-                    res.write(`Not Found the document of ${resource}!`);
+                    res.write(`<h1 style="color: red;">404 Not Found the document of ~/${resource}!</h1>`);
                     res.end('\n');
                 } else { // file found.
+                    console.log('check'); // default will be run for every case.
                     res.end(data.toString());
                 }
             });
     }
-});
-
-server.listen(PORT, function(err) {
+}).listen(PORT, function(err) {
     if (err) return console.log('err:', err);
-    console.log(`Node server listening on portttt ${PORT}`);
+    console.log(`Node server listening on portttt ${PORT}!!`);
 });
 
 

@@ -2,7 +2,7 @@
 
 var moment = require('moment');
 
-module.exports = function(params, res) {
+function AgeAPI(params, res) {
 
     var data = params.shift();
     console.log('data: ', data);
@@ -43,3 +43,5 @@ module.exports = function(params, res) {
     res.end(`${result} old`);
     // res.end('Age!!!!!!\n');
 }
+
+module.exports = AgeAPI;
